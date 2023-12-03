@@ -21,7 +21,9 @@ export type JSONValue<Keys extends string = string> =
 	| Array<JSONValue>
 	| { [key in Keys]: JSONValue };
 
-export class JSONFileMap<const Schema = Record<string, JSONValue>> implements Map<keyof Schema, Schema[keyof Schema]> {
+export type SchemaMap<Schema> = Map<keyof Schema | string, Schema[keyof Schema]>;
+
+export class JSONFileMap<const Schema = Record<string, JSONValue>> implements SchemaMap<Schema> {
 	get [Symbol.toStringTag](): '[JSONFileMap]' {
 		return '[JSONFileMap]';
 	}
@@ -35,7 +37,7 @@ export class JSONFileMap<const Schema = Record<string, JSONValue>> implements Ma
 		}
 	}
 
-	get _map(): Map<string, JSONValue> {
+	get _map(): SchemaMap<Schema> {
 		const content = readFileSync(this.path, 'utf8');
 		if (!isJSON(content)) {
 			console.warn(`Invalid JSON file: ${this.path} (overwriting)`);
@@ -45,7 +47,7 @@ export class JSONFileMap<const Schema = Record<string, JSONValue>> implements Ma
 		return new Map(Object.entries(JSON.parse(content)));
 	}
 
-	_write(map: Map<string, JSONValue>) {
+	_write(map: SchemaMap<Schema>) {
 		if (!existsSync(this.path)) {
 			writeFileSync(this.path, '{}');
 		}
@@ -64,15 +66,15 @@ export class JSONFileMap<const Schema = Record<string, JSONValue>> implements Ma
 		return rt;
 	}
 
-	get<K extends keyof Schema>(key: K & string): Schema[K] {
+	get<K extends keyof Schema>(key: K | string): Schema[K] {
 		return this._map.get(key) as Schema[K];
 	}
 
-	has(key: keyof Schema & string): boolean {
-		return this._map.has(key);
+	has(key: keyof Schema | string): boolean {
+		return this._map.has(key.toString());
 	}
 
-	set(key: keyof Schema & string, value: Schema[keyof Schema] & JSONValue): this {
+	set(key: keyof Schema | string, value: Schema[keyof Schema] & JSONValue): this {
 		const map = this._map;
 		map.set(key, value);
 		this._write(map);

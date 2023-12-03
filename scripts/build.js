@@ -18,7 +18,7 @@ const outfile = path.join(options.out, 'cli.js');
 const ctx = await context({
 	entryPoints: ['src/cli.ts'],
 	outfile,
-	format: 'esm',
+	format: 'cjs',
 	platform: 'node',
 	keepNames: true,
 	sourcemap: true,

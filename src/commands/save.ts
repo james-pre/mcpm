@@ -1,3 +1,3 @@
 import { Options } from '../types.js';
 
-export default function (cmd: string, options: Options) {}
+export default function (pack: string, options: Options) {}

@@ -1,8 +1,19 @@
 import { Command } from 'commander';
+import { configPath } from './config.js';
+import { existsSync, mkdirSync, writeFileSync } from 'fs';
+import { cachePath } from './cache.js';
 
 const { version, description } = $package;
 
 const program = new Command();
+
+if(!existsSync(cachePath)) {
+	mkdirSync(cachePath, { recursive: true });
+}
+
+if(!existsSync(configPath)) {
+	writeFileSync(configPath, '{}');
+}
 
 program
 	.name('mcpm')
@@ -18,7 +29,7 @@ program
 	.alias('i')
 	.description('Change configuration options')
 	.argument('<key>', 'Which option to change')
-	.argument('<value>', 'The value for the option')
+	.argument('[value]', 'The value for the option. If not provided, the option will be read.')
 	.action(config);
 
 import install from './commands/install.js';
