@@ -1,0 +1,45 @@
+{
+	"name": "mcpm",
+	"private": true,
+	"version": "0.0.1",
+	"description": "A utility for managing Minecraft mods",
+	"main": "dist/bundle.js",
+	"type": "module",
+	"scripts": {
+		"format:check": "prettier --check . --ignore-path .gitignore",
+		"format": "prettier --write . --ignore-path .gitignore",
+		"lint": "eslint src && tsc -p tsconfig.json --noEmit",
+		"build": "node scripts/build.js",
+		"prepublishOnly": "npm run build",
+		"dev": "node scripts/build.js -w"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/dr-vortex/mcpm.git"
+	},
+	"keywords": [
+		"blankstorm",
+		"api"
+	],
+	"author": "Dr. Vortex",
+	"license": "See license.md",
+	"bugs": {
+		"url": "https://github.com/dr-vortex/mcpm/issues"
+	},
+	"engines": {
+		"node": ">=18.0.0"
+	},
+	"devDependencies": {
+		"@types/node": "^20.5.8",
+		"@typescript-eslint/eslint-plugin": "^5.59.6",
+		"@typescript-eslint/parser": "^5.59.6",
+		"esbuild": "^0.17.14",
+		"eslint": "^8.24.0",
+		"pkg": "^5.8.1",
+		"prettier": "^2.7.1",
+		"typescript": "^5.2.2"
+	},
+	"dependencies": {
+		"commander": "^11.1.0"
+	}
+}

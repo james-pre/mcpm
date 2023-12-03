@@ -1,0 +1,17 @@
+{
+	"compilerOptions": {
+		"lib": ["ESNext", "DOM"],
+		"module": "NodeNext",
+		"target": "ESNext",
+		"outDir": "dist",
+		"typeRoots": ["node_modules/@types"],
+		"moduleResolution": "NodeNext",
+		"esModuleInterop": true,
+		"noImplicitThis": true,
+		"resolveJsonModule": true,
+		"baseUrl": "src"
+	},
+	"files": ["src/cli.ts"],
+	"include": ["src"],
+	"exclude": ["node_modules"]
+}
