@@ -37,7 +37,9 @@ const ctx = await context({
 				});
 				build.onEnd(() => {
 					try {
-						execSync(`npx pkg -o ${options.out}/mcpm -t node18-win,node18-linux,node18-mac ${outfile}`, { stdio: 'inherit' });
+						execSync(`npx pkg -o ${options.out}/mcpm -t node18-win,node18-linux,node18-mac ${outfile}`, {
+							stdio: 'inherit',
+						});
 					} catch (error) {
 						console.error(error.toString());
 					}
